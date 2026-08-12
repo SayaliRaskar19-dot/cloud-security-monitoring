@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>CloudSecure | Settings</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 240px;
+            height: 100vh;
+            background: #0f172a;
+            padding: 25px 18px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 35px;
+            padding-left: 12px;
+        }
+
+        .logo span {
+            color: #3b82f6;
+        }
+
+        .menu-title {
+            color: #64748b;
+            font-size: 11px;
+            margin: 20px 12px 10px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 12px 14px;
+            margin-bottom: 5px;
+
+            border-radius: 7px;
+
+            color: #cbd5e1;
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .menu-item:hover {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .menu-item.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main {
+            margin-left: 240px;
+        }
+
+        .topbar {
+            height: 75px;
+            background: white;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 32px;
+        }
+
+        .content {
+            padding: 32px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .panel {
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            max-width: 800px;
+
+            margin-bottom: 20px;
+        }
+
+        .setting {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 18px 0;
+
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .setting:last-child {
+            border-bottom: none;
+        }
+
+        .setting h3 {
+            margin: 0 0 5px;
+            font-size: 15px;
+        }
+
+        .setting p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+
+            padding: 9px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+        }
+
+        .switch {
+            width: 46px;
+            height: 24px;
+
+            position: relative;
+
+            display: inline-block;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+
+            cursor: pointer;
+
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            background: #cbd5e1;
+
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            content: "";
+
+            position: absolute;
+
+            width: 18px;
+            height: 18px;
+
+            left: 3px;
+            bottom: 3px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            transition: 0.2s;
+        }
+
+        input:checked + .slider {
+            background: #2563eb;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        button {
+            margin-top: 20px;
+
+            padding: 11px 20px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        #message {
+            color: #15803d;
+
+            margin-top: 15px;
+
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="sidebar">
+
+        <div class="logo">
+            Cloud<span>Secure</span>
+        </div>
+
+
+        <div class="menu-title">
+            SECURITY
+        </div>
+
+        <a href="/" class="menu-item">
+            📊 Dashboard
+        </a>
+
+        <a href="/incidents" class="menu-item">
+            🚨 Incidents
+        </a>
+
+        <a href="/threat-detection" class="menu-item">
+            🛡️ Threat Detection
+        </a>
+
+        <a href="/blocked-ips" class="menu-item">
+            🔒 Blocked IPs
+        </a>
+
+
+        <div class="menu-title">
+            MANAGEMENT
+        </div>
+
+        <a href="/reports" class="menu-item">
+            📈 Reports
+        </a>
+
+        <a href="/settings" class="menu-item active">
+            ⚙️ Settings
+        </a>
+
+    </div>
+
+
+
+    <div class="main">
+
+
+        <div class="topbar">
+
+            <h2>
+                Security Settings
+            </h2>
+
+            <span>
+                🟢 System Online
+            </span>
+
+        </div>
+
+
+
+        <div class="content">
+
+
+            <h1>
+                Security Configuration
+            </h1>
+
+            <p class="subtitle">
+                Configure basic monitoring and detection settings.
+            </p>
+
+
+
+            <div class="panel">
+
+
+                <div class="setting">
+
+                    <div>
+
+                        <h3>
+                            Brute Force Detection
+                        </h3>
+
+                        <p>
+                            Detect repeated failed login attempts.
+                        </p>
+
+                    </div>
+
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="bruteForce"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+
+                <div class="setting">
+
+                    <div>
+
+                        <h3>
+                            Suspicious IP Detection
+                        </h3>
+
+                        <p>
+                            Check incoming IP addresses against suspicious IP list.
+                        </p>
+
+                    </div>
+
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="suspiciousIP"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+
+                <div class="setting">
+
+                    <div>
+
+                        <h3>
+                            Brute Force Threshold
+                        </h3>
+
+                        <p>
+                            Number of failed attempts before an alert.
+                        </p>
+
+                    </div>
+
+
+                    <input
+                        type="number"
+                        id="threshold"
+                        value="5"
+                        min="1"
+                    >
+
+                </div>
+
+
+
+                <button onclick="saveSettings()">
+
+                    Save Settings
+
+                </button>
+
+
+                <p id="message"></p>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        function saveSettings() {
+
+            const threshold =
+                document.getElementById(
+                    "threshold"
+                ).value;
+
+
+            localStorage.setItem(
+                "bruteForceThreshold",
+                threshold
+            );
+
+
+            localStorage.setItem(
+                "bruteForceEnabled",
+                document.getElementById(
+                    "bruteForce"
+                ).checked
+            );
+
+
+            localStorage.setItem(
+                "suspiciousIPEnabled",
+                document.getElementById(
+                    "suspiciousIP"
+                ).checked
+            );
+
+
+            document.getElementById(
+                "message"
+            ).textContent =
+                "Settings saved successfully.";
+
+        }
+
+
+        function loadSettings() {
+
+            const threshold =
+                localStorage.getItem(
+                    "bruteForceThreshold"
+                );
+
+
+            if (threshold) {
+
+                document.getElementById(
+                    "threshold"
+                ).value = threshold;
+
+            }
+
+        }
+
+
+        loadSettings();
+
+    </script>
+
+
+</body>
+
+</html>

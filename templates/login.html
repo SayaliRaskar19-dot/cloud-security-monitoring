@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CloudSecure | Login</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 900px;
+            min-height: 520px;
+            display: flex;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+        }
+
+        .left {
+            width: 50%;
+            background: linear-gradient(160deg, #0f172a, #2563eb);
+            color: white;
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .left h1 {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+
+        .left p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #dbeafe;
+        }
+
+        .security-icons {
+            margin-top: 35px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .icon {
+            padding: 12px 16px;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            font-size: 14px;
+        }
+
+        .right {
+            width: 50%;
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right h2 {
+            font-size: 30px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #334155;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        @media(max-width: 750px) {
+
+            .container {
+                width: 95%;
+            }
+
+            .left {
+                display: none;
+            }
+
+            .right {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="left">
+
+            <div class="logo">
+                Cloud<span>Secure</span>
+            </div>
+
+            <h1>Secure Your Cloud.</h1>
+
+            <p>
+                Monitor security events, detect suspicious activity
+                and respond to potential threats from a centralized
+                security dashboard.
+            </p>
+
+            <div class="security-icons">
+
+                <div class="icon">
+                    🛡 Threat Detection
+                </div>
+
+                <div class="icon">
+                    🔐 Secure Access
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="right">
+
+            <h2>Welcome Back</h2>
+
+            <p class="subtitle">
+                Sign in to your security console
+            </p>
+
+            {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter username"
+                    required
+                >
+
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter password"
+                    required
+                >
+
+
+                <button type="submit">
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <div class="footer">
+                CloudSecure Security Monitoring System
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

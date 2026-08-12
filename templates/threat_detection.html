@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CloudSecure | Threat Detection</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: 240px;
+            height: 100vh;
+            background: #0f172a;
+            color: white;
+            padding: 25px 18px;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            padding: 0 12px 35px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .menu-title {
+            color: #64748b;
+            font-size: 11px;
+            margin: 15px 12px 10px;
+            text-transform: uppercase;
+        }
+
+        .menu-item {
+            padding: 13px 14px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            color: #cbd5e1;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu-item:hover,
+        .active {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .main {
+            margin-left: 240px;
+        }
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+        }
+
+        .topbar h2 {
+            font-size: 20px;
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .online {
+            color: #15803d;
+            font-size: 13px;
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .heading p {
+            color: #64748b;
+        }
+
+        .cards {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            width: 210px;
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .card h2 {
+            margin-top: 10px;
+            font-size: 29px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 22px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .panel-header h2 {
+            font-size: 18px;
+        }
+
+        input {
+            padding: 10px 13px;
+            width: 250px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px;
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+            padding: 15px 14px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .failed {
+            color: #b91c1c;
+            background: #fee2e2;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .success {
+            color: #15803d;
+            background: #dcfce7;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .suspicious {
+            color: #b45309;
+            background: #fef3c7;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .ip {
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Cloud<span>Secure</span>
+        </div>
+
+        <div class="menu-title">
+            Security
+        </div>
+
+        <a href="/" class="menu-item">
+            📊 Dashboard
+        </a>
+
+        <a href="/" class="menu-item">
+            🚨 Incidents
+        </a>
+
+        <a href="/threat-detection" class="menu-item active">
+            🛡️ Threat Detection
+        </a>
+
+        <a href="/blocked-ips" class="menu-item">
+            🔒 Blocked IPs
+        </a>
+
+        <div class="menu-title">
+            Management
+        </div>
+
+        <a href="/" class="menu-item">
+            📈 Reports
+        </a>
+
+        <a href="/" class="menu-item">
+            ⚙️ Settings
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <h2>
+                Threat Detection
+            </h2>
+
+            <div class="top-right">
+
+                <span class="online">
+                    🟢 Detection Engine Active
+                </span>
+
+                <div class="avatar">
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+            <div class="heading">
+
+                <h1>
+                    Security Event Monitoring
+                </h1>
+
+                <p>
+                    Monitor authentication and network events for potential threats.
+                </p>
+
+            </div>
+
+
+            <!-- CARDS -->
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <p>
+                        TOTAL EVENTS
+                    </p>
+
+                    <h2 id="totalEvents">
+                        0
+                    </h2>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p>
+                        FAILED EVENTS
+                    </p>
+
+                    <h2 id="failedEvents">
+                        0
+                    </h2>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p>
+                        SUCCESS EVENTS
+                    </p>
+
+                    <h2 id="successEvents">
+                        0
+                    </h2>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p>
+                        SUSPICIOUS EVENTS
+                    </p>
+
+                    <h2 id="suspiciousEvents">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOG TABLE -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>
+                        Live Security Events
+                    </h2>
+
+                    <input
+                        id="search"
+                        type="text"
+                        placeholder="Search IP / username..."
+                    >
+
+                </div>
+
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>TIMESTAMP</th>
+                            <th>IP ADDRESS</th>
+                            <th>USERNAME</th>
+                            <th>EVENT</th>
+                            <th>STATUS</th>
+                            <th>DETECTION</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="logTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        let logs = [];
+
+
+        async function loadLogs() {
+
+            const response =
+                await fetch("/api/logs");
+
+            logs =
+                await response.json();
+
+
+            document.getElementById(
+                "totalEvents"
+            ).textContent = logs.length;
+
+
+            document.getElementById(
+                "failedEvents"
+            ).textContent =
+                logs.filter(
+                    log => log.status === "FAILED"
+                ).length;
+
+
+            document.getElementById(
+                "successEvents"
+            ).textContent =
+                logs.filter(
+                    log => log.status === "SUCCESS"
+                ).length;
+
+
+            document.getElementById(
+                "suspiciousEvents"
+            ).textContent =
+                logs.filter(
+                    log =>
+                        log.status === "DETECTED"
+                ).length;
+
+
+            renderLogs();
+
+        }
+
+
+        function renderLogs() {
+
+            const table =
+                document.getElementById(
+                    "logTable"
+                );
+
+
+            const search =
+                document.getElementById(
+                    "search"
+                ).value.toLowerCase();
+
+
+            table.innerHTML = "";
+
+
+            const filtered =
+                logs.filter(log =>
+
+                    log.ip_address
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    log.username
+                        .toLowerCase()
+                        .includes(search)
+
+                );
+
+
+            if (filtered.length === 0) {
+
+                table.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="empty"
+                        >
+                            No security events found
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
+
+
+            filtered.forEach(log => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                let statusClass = "success";
+
+                let detection = "Normal";
+
+
+                if (log.status === "FAILED") {
+
+                    statusClass = "failed";
+
+                    detection = "⚠ Failed Authentication";
+
+                }
+
+
+                if (log.status === "DETECTED") {
+
+                    statusClass = "suspicious";
+
+                    detection = "🚨 Suspicious Activity";
+
+                }
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${log.timestamp}
+                    </td>
+
+                    <td>
+                        <span class="ip">
+                            ${log.ip_address}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${log.username}
+                    </td>
+
+                    <td>
+                        ${log.event}
+                    </td>
+
+                    <td>
+                        <span class="${statusClass}">
+                            ${log.status}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${detection}
+                    </td>
+
+                `;
+
+
+                table.appendChild(row);
+
+            });
+
+        }
+
+
+        document
+            .getElementById("search")
+            .addEventListener(
+                "input",
+                renderLogs
+            );
+
+
+        loadLogs();
+
+    </script>
+
+
+</body>
+
+</html>
